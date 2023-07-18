@@ -1,0 +1,8 @@
+name: ZeroLocations
+version: '${project.version}'
+main: zero.locations.main.MainLocations
+api-version: 1.16
+authors: [Dimensoes]
+commands:
+  local:
+    description: "Teletransporta para locais."
