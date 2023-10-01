@@ -1,10 +1,11 @@
-package zero.locations.main;
+package origins.locations.main;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import zero.locations.commands.CommandLocation;
-import zero.locations.utils.FunctionsManager;
+import origins.locations.commands.CommandLocation;
+import origins.locations.events.EventsManager;
+import origins.locations.utils.FunctionsManager;
 
 public final class MainLocations extends JavaPlugin {
 
@@ -19,8 +20,13 @@ public final class MainLocations extends JavaPlugin {
     }
 
     public void registerCommands() {
-        CommandLocation warp = new CommandLocation(this, "local");
+        new CommandLocation(this, "inicio");
         console.sendMessage("§a" + getPlugin().getName() + ": Comandos carregados com sucesso.");
+    }
+
+    public void registerEvents() {
+        getServer().getPluginManager().registerEvents(new EventsManager(), this);
+        console.sendMessage("§a" + getPlugin().getName() + ": Eventos carregados com sucesso.");
     }
 
     @Override
@@ -29,6 +35,7 @@ public final class MainLocations extends JavaPlugin {
         this.saveDefaultConfig();
         functions = new FunctionsManager();
         registerCommands();
+        registerEvents();
         console.sendMessage("§a" + getPlugin().getName() + ": Plugin habilitado com sucesso.");
     }
 

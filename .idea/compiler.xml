@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ZeroLocations" />
+        <module name="OriginsSpawn" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ZeroLocations" target="16" />
+    </bytecodeTargetLevel>
   </component>
 </project>

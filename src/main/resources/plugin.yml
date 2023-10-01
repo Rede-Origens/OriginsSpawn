@@ -1,8 +1,8 @@
-name: ZeroLocations
+name: OriginsSpawn
 version: '${project.version}'
-main: zero.locations.main.MainLocations
-api-version: 1.16
+main: origins.locations.main.MainLocations
+api-version: 1.19
 authors: [Dimensoes]
 commands:
-  local:
-    description: "Teletransporta para locais."
+  inicio:
+    description: "Teletransporta para o ponto de origem."
