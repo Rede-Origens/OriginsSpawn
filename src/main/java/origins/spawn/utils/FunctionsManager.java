@@ -1,4 +1,4 @@
-package origins.locations.utils;
+package origins.spawn.utils;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -8,7 +8,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import origins.locations.main.MainLocations;
+import origins.spawn.main.MainSpawn;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class FunctionsManager {
 
   public FileConfiguration getConfig() {
-    return MainLocations.getPlugin().getConfig();
+    return MainSpawn.getPlugin().getConfig();
   }
 
   public void teleportSpawn(Player player) {
@@ -66,7 +66,7 @@ public class FunctionsManager {
     getConfig().set("spawn.coordinates.world", world);
 
     try {
-      MainLocations.getPlugin().saveConfig();
+      MainSpawn.getPlugin().saveConfig();
       player.sendMessage("§aLocal de origem definido.");
     } catch (Exception exception) {
       player.sendMessage("§cOcorreu um erro ao definir o spawn.");
@@ -80,7 +80,7 @@ public class FunctionsManager {
     }
     try {
       getConfig().set("spawn", null);
-      MainLocations.getPlugin().saveConfig();
+      MainSpawn.getPlugin().saveConfig();
       sender.sendMessage("§aLocal de origem removido");
     } catch (Exception exception) {
       sender.sendMessage("§aOcorreu um erro ao remover o local de origem.");

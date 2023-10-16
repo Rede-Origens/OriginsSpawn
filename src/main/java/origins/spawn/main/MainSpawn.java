@@ -1,21 +1,21 @@
-package origins.locations.main;
+package origins.spawn.main;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import origins.locations.commands.CommandLocation;
-import origins.locations.events.EventsManager;
-import origins.locations.utils.FunctionsManager;
+import origins.spawn.commands.CommandLocation;
+import origins.spawn.events.EventsManager;
+import origins.spawn.utils.FunctionsManager;
 
-public final class MainLocations extends JavaPlugin {
+public final class MainSpawn extends JavaPlugin {
 
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-    private static MainLocations instance;
+    private static MainSpawn instance;
 
     private FunctionsManager functions;
 
-    public static MainLocations getPlugin() {
+    public static MainSpawn getPlugin() {
         return instance;
     }
 

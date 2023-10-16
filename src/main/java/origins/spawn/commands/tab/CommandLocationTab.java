@@ -1,13 +1,11 @@
-package origins.locations.commands.tab;
+package origins.spawn.commands.tab;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
-import origins.locations.main.MainLocations;
 
 import java.util.ArrayList;
 import java.util.Arrays;

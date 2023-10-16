@@ -1,0 +1,11 @@
+kitStatus: true
+kitName: iniciante
+
+welcomeMessageStatus: true
+welcomeMessage: "§a%player% entrou pela primeira vez no servidor."
+
+joinMessageStatus: false
+joinMessage: "&a%player% entrou no servidor"
+
+quitMessageStatus: false
+quitMessage: "&c%player% saiu do servidor"

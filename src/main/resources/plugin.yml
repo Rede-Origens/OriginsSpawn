@@ -1,8 +1,10 @@
 name: OriginsSpawn
 version: '${project.version}'
-main: origins.locations.main.MainLocations
+main: origins.spawn.main.MainSpawn
 api-version: 1.19
 authors: [Dimensoes]
+depend:
+  - OriginsKits
 commands:
   inicio:
     description: "Teletransporta para o ponto de origem."

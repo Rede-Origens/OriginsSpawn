@@ -1,13 +1,13 @@
-package origins.locations.commands;
+package origins.spawn.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import origins.locations.commands.tab.CommandLocationTab;
-import origins.locations.main.MainLocations;
-import origins.locations.utils.FunctionsManager;
+import origins.spawn.commands.tab.CommandLocationTab;
+import origins.spawn.main.MainSpawn;
+import origins.spawn.utils.FunctionsManager;
 
 import java.util.Objects;
 
@@ -15,7 +15,7 @@ public class CommandLocation implements CommandExecutor {
 
   private final FunctionsManager functions = new FunctionsManager();
 
-  public CommandLocation(MainLocations locations, String command) {
+  public CommandLocation(MainSpawn locations, String command) {
     Objects.requireNonNull(locations.getCommand(command)).setExecutor(this);
     Objects.requireNonNull(locations.getCommand(command)).setTabCompleter(new CommandLocationTab());
   }
@@ -59,7 +59,7 @@ public class CommandLocation implements CommandExecutor {
           return;
         }
         try {
-          MainLocations.getPlugin().reloadConfig();
+          MainSpawn.getPlugin().reloadConfig();
           sender.sendMessage("§aConfigurações reiniciadas com sucesso.");
         } catch (Exception error) {
           sender.sendMessage("§cOcorreu um erro ao reiniciar as configurações.");
