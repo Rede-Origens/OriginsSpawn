@@ -1,11 +1,15 @@
 package origins.spawn.main;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import origins.spawn.commands.CommandLocation;
 import origins.spawn.events.EventsManager;
 import origins.spawn.utils.FunctionsManager;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public final class MainSpawn extends JavaPlugin {
 
@@ -14,6 +18,8 @@ public final class MainSpawn extends JavaPlugin {
     private static MainSpawn instance;
 
     private FunctionsManager functions;
+
+    public HashMap<UUID, Location> teleportCooldown = new HashMap<>();
 
     public static MainSpawn getPlugin() {
         return instance;

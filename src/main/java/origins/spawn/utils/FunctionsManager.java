@@ -8,9 +8,13 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import origins.spawn.main.MainSpawn;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,9 +29,46 @@ public class FunctionsManager {
       player.sendMessage("§cLocal de origem não encontrado.");
       return;
     }
-    player.teleport(getSpawn());
-    player.sendMessage("§aTeletransportado para o local de origem.");
-    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+
+    UUID uuid = player.getUniqueId();
+    HashMap<UUID, Location> cooldowns = MainSpawn.getPlugin().teleportCooldown;
+
+    if (cooldowns.containsKey(player.getUniqueId())) {
+      player.sendMessage("§cVocê já está em um teleporte.");
+      return;
+    }
+
+    if(player.hasPermission("origins.spawn.bypass")) {
+      player.teleport(getSpawn());
+      player.sendMessage("§aTeletransportado para o inicio.");
+      player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+      return;
+    }
+
+    cooldowns.put(uuid, player.getLocation());
+    new BukkitRunnable() {
+      int countdown = 3;
+
+      @Override
+      public void run() {
+        if (cooldowns.containsKey(uuid)) {
+          if (countdown > 0) {
+            player.sendMessage("§aTeletransportando em " + countdown + " segundo(s). Por favor, não se mova.");
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
+            countdown--;
+          } else {
+            player.teleport(getSpawn());
+            player.sendMessage("§aTeletransportado para o inicio.");
+            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+            cooldowns.remove(uuid);
+            cancel();
+          }
+        } else {
+          cooldowns.remove(uuid);
+          cancel();
+        }
+      }
+    }.runTaskTimer(MainSpawn.getPlugin(), 0L, 20);
   }
 
   public Location getSpawn() {

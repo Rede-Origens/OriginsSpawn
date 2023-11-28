@@ -2,22 +2,47 @@ package origins.spawn.events;
 
 import lb.kits.main.MainKits;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.event.player.*;
 import origins.spawn.main.MainSpawn;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class EventsManager implements Listener {
 
   @EventHandler
   public void onRespawn(PlayerRespawnEvent event) {
     event.setRespawnLocation(MainSpawn.getPlugin().getFunctions().getSpawn());
+  }
+
+  @EventHandler
+  public void onMove(PlayerMoveEvent event) {
+    Player player = event.getPlayer();
+    HashMap<UUID, Location> cooldowns = MainSpawn.getPlugin().teleportCooldown;
+
+    if(cooldowns.containsKey(player.getUniqueId())) {
+      Location initialLocation = cooldowns.get(player.getUniqueId());
+      Location currentLocation = event.getTo();
+
+      if(currentLocation != null) {
+        double initialX = initialLocation.getX();
+        double initialZ = initialLocation.getZ();
+
+        double currentX = currentLocation.getX();
+        double currentZ = currentLocation.getZ();
+
+        if (initialX != currentX || initialZ != currentZ) {
+          player.sendMessage("§cTeletransporte cancelado.");
+          player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0F, 1.0F);
+          cooldowns.remove(player.getUniqueId());
+        }
+      }
+    }
   }
 
   @EventHandler
@@ -66,14 +91,21 @@ public class EventsManager implements Listener {
   @EventHandler
   public void onLeave(PlayerQuitEvent event) {
     Player player = event.getPlayer();
+    HashMap<UUID, Location> cooldowns = MainSpawn.getPlugin().teleportCooldown;
+
+    // Remover o jogador do teletransporte caso esteja
+    cooldowns.remove(player.getUniqueId());
+
     boolean quitMessageStatus = MainSpawn.getPlugin().getConfig().getBoolean("quitMessageStatus");
 
     String defaultMessage = "§c%player% saiu do servidor.";
     String quitMessage = MainSpawn.getPlugin().getConfig().getString("quitMessage");
     quitMessage = (quitMessage != null) ? quitMessage : defaultMessage;
 
-    if (quitMessageStatus)
+    if (quitMessageStatus){
       event.setQuitMessage(MainSpawn.getPlugin().getFunctions().hex(quitMessage.replaceAll("%player%", player.getName())));
-    else event.setQuitMessage(null);
+    } else {
+      event.setQuitMessage(null);
+    }
   }
 }
