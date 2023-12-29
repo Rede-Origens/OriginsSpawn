@@ -25,19 +25,17 @@ public class FunctionsManager {
   }
 
   public void teleportSpawn(Player player) {
+    UUID uuid = player.getUniqueId();
+    HashMap<UUID, Location> cooldowns = MainSpawn.getPlugin().teleportCooldown;
+
+    if (cooldowns.containsKey(uuid)) {
+      player.sendMessage("§cVocê já está em um teleporte.");
+      return;
+    }
     if (getSpawn() == null) {
       player.sendMessage("§cLocal de origem não encontrado.");
       return;
     }
-
-    UUID uuid = player.getUniqueId();
-    HashMap<UUID, Location> cooldowns = MainSpawn.getPlugin().teleportCooldown;
-
-    if (cooldowns.containsKey(player.getUniqueId())) {
-      player.sendMessage("§cVocê já está em um teleporte.");
-      return;
-    }
-
     if(player.hasPermission("origins.spawn.bypass")) {
       player.teleport(getSpawn());
       player.sendMessage("§aTeletransportado para o inicio.");
