@@ -1,8 +1,8 @@
 name: OriginsSpawn
 version: '${project.version}'
-main: origins.spawn.main.MainSpawn
+main: origins.spawn.main.OriginsSpawn
 api-version: 1.19
-authors: [Dimensoes]
+authors: [ Dimensoes ]
 depend:
   - OriginsKits
 commands:
